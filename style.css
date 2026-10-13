@@ -1,0 +1,702 @@
+:root {
+  --primary: #ff6b81;
+  --primary-hover: #ff4757;
+  --primary-light: #ffeaa7;
+  --secondary: #70a1ff;
+  --secondary-hover: #1e90ff;
+  --accent-purple: #a55eea;
+  --accent-mint: #2ed573;
+  --accent-yellow: #ffa502;
+  --bg-gradient: linear-gradient(135deg, #ffeef8 0%, #e8f0fe 50%, #fdf6e2 100%);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 20px 45px rgba(255, 107, 129, 0.15), 0 8px 16px rgba(0, 0, 0, 0.06);
+  --text-main: #2f3542;
+  --text-muted: #747d8c;
+  --text-light: #a4b0be;
+  --border-radius-lg: 28px;
+  --border-radius-md: 18px;
+  --border-radius-sm: 12px;
+  --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  --font-display: 'Jua', 'Pretendard', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  position: relative;
+  overflow-x: hidden;
+  padding: 20px 16px;
+}
+
+/* 배경 장식 원형 버블들 */
+.bg-shape {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.65;
+  animation: floatShape 8s ease-in-out infinite alternate;
+}
+
+.shape-1 {
+  width: 320px;
+  height: 320px;
+  background: #ffc2d1;
+  top: -50px;
+  left: -80px;
+}
+
+.shape-2 {
+  width: 380px;
+  height: 380px;
+  background: #bbf2f6;
+  bottom: -60px;
+  right: -90px;
+  animation-delay: -3s;
+}
+
+.shape-3 {
+  width: 250px;
+  height: 250px;
+  background: #ffeaa7;
+  top: 40%;
+  left: 80%;
+  animation-delay: -5s;
+}
+
+.shape-4 {
+  width: 220px;
+  height: 220px;
+  background: #dcd6f7;
+  bottom: 20%;
+  left: 5%;
+  animation-delay: -2s;
+}
+
+@keyframes floatShape {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-30px) scale(1.08); }
+}
+
+/* 메인 앱 컨테이너 */
+.app-container {
+  width: 100%;
+  max-width: 540px;
+  z-index: 10;
+  margin: auto;
+}
+
+/* 카드 기본 스타일 */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--card-shadow);
+  padding: 38px 28px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card.hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+}
+
+.card.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: cardFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* 뱃지 태그 */
+.badge-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #fff0f3, #ffe3e8);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 7px 18px;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(255, 107, 129, 0.15);
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 107, 129, 0.2);
+}
+
+/* 히어로 이모지 */
+.hero-emoji {
+  font-size: 4.8rem;
+  margin: 10px 0 16px;
+  user-select: none;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.12));
+}
+
+.animate-bounce {
+  animation: bounceEmoji 2.2s infinite ease-in-out;
+}
+
+@keyframes bounceEmoji {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+/* 타이틀 & 서브타이틀 */
+.main-title {
+  font-family: var(--font-display);
+  font-size: 2.3rem;
+  line-height: 1.25;
+  color: var(--text-main);
+  margin-bottom: 14px;
+  word-break: keep-all;
+}
+
+.main-title .highlight {
+  background: linear-gradient(120deg, #ff6b81, #ffa502);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  word-break: keep-all;
+}
+
+/* 안내 뱃지 그룹 */
+.info-badges {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.info-pill {
+  background: #f1f2f6;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #57606f;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #e4e7eb;
+}
+
+/* 버튼 스타일 */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 16px 36px;
+  border-radius: 50px;
+  transition: all 0.25s ease;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff6b81, #ff4757);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(255, 71, 87, 0.35);
+  width: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(255, 71, 87, 0.45);
+}
+
+.btn-primary:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-bounce {
+  animation: pulseGlow 2.5s infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 10px 22px rgba(255, 71, 87, 0.35);
+  }
+  50% {
+    box-shadow: 0 14px 30px rgba(255, 71, 87, 0.6);
+  }
+}
+
+.btn-secondary {
+  background: #f1f2f6;
+  color: var(--text-main);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  width: 100%;
+}
+
+.btn-secondary:hover {
+  background: #e4e7eb;
+  transform: translateY(-2px);
+}
+
+.btn-sub {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-sub:hover {
+  color: var(--text-main);
+  background: #f1f2f6;
+}
+
+/* ============================
+   2. 퀴즈 화면 스타일
+   ============================ */
+.quiz-header {
+  margin-bottom: 26px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.step-count {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.progress-percent {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.progress-bar-wrapper {
+  width: 100%;
+  height: 14px;
+  background: #f1f2f6;
+  border-radius: 20px;
+  overflow: visible;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 8.33%;
+  background: linear-gradient(90deg, #ff9ff3, #ff6b81);
+  border-radius: 20px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-rocket {
+  position: absolute;
+  right: -12px;
+  top: -8px;
+  font-size: 1.15rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  transition: transform 0.3s ease;
+}
+
+/* 질문 컨테이너 */
+.question-container {
+  text-align: center;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 28px;
+  animation: fadeInQuestion 0.35s ease;
+}
+
+@keyframes fadeInQuestion {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.question-emoji {
+  font-size: 3.2rem;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+}
+
+.question-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  line-height: 1.45;
+  color: var(--text-main);
+  word-break: keep-all;
+}
+
+/* 선택지 버튼들 */
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.btn-option {
+  width: 100%;
+  background: #ffffff;
+  border: 2px solid #edf0f5;
+  border-radius: var(--border-radius-md);
+  padding: 18px 20px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+  transition: all 0.22s cubic-bezier(0.2, 0.9, 0.3, 1);
+  font-family: var(--font-main);
+}
+
+.btn-option:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  background: #fff8f9;
+  box-shadow: 0 10px 22px rgba(255, 107, 129, 0.16);
+}
+
+.btn-option:active {
+  transform: scale(0.98);
+}
+
+.option-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #f1f2f6;
+  color: #57606f;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.btn-option:hover .option-icon {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.option-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+/* 퀴즈 하단 */
+.quiz-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 38px;
+  padding-top: 8px;
+}
+
+/* ============================
+   3. 결과 화면 스타일
+   ============================ */
+.result-header {
+  margin-bottom: 24px;
+}
+
+.result-emoji {
+  font-size: 4.5rem;
+  margin: 10px 0 6px;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.15));
+  animation: bounceEmoji 2.2s infinite ease-in-out;
+}
+
+.result-type {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  letter-spacing: 2px;
+  color: var(--primary);
+  margin-bottom: 6px;
+  text-shadow: 2px 2px 0 rgba(255, 107, 129, 0.15);
+}
+
+.result-nickname {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #2f3542;
+  word-break: keep-all;
+}
+
+.result-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.result-box {
+  background: #fafbfe;
+  border: 1px solid #eef1f6;
+  border-radius: var(--border-radius-md);
+  padding: 18px 20px;
+}
+
+.box-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.result-desc-text {
+  font-size: 0.98rem;
+  color: #4b5563;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.traits-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.traits-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.traits-list li::before {
+  content: '✨';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.85rem;
+}
+
+/* 같은 유형 연예인 스타일 */
+.celebs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.celeb-tag {
+  background: #ffffff;
+  color: #374151;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 50px;
+  border: 1.5px solid #ffccd5;
+  box-shadow: 0 2px 6px rgba(255, 107, 129, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.celeb-tag:hover {
+  transform: translateY(-2px);
+  background: #fff0f3;
+  border-color: var(--primary);
+  color: var(--primary-hover);
+}
+
+/* 찰떡궁합 그리드 */
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.match-card {
+  padding: 14px 12px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.match-best {
+  background: linear-gradient(135deg, #fff0f5, #ffe4eb);
+  border: 1px solid #ffd1dc;
+}
+
+.match-worst {
+  background: linear-gradient(135deg, #f0f7ff, #e4efff);
+  border: 1px solid #cfe2ff;
+}
+
+.match-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.match-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text-main);
+}
+
+/* 액션 버튼 그룹 */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 토스트 메시지 */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(47, 53, 66, 0.95);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+  white-space: nowrap;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* 푸터 */
+.site-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  z-index: 10;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 480px) {
+  body {
+    padding: 14px 10px;
+  }
+
+  .card {
+    padding: 28px 18px;
+    border-radius: 22px;
+  }
+
+  .main-title {
+    font-size: 1.95rem;
+  }
+
+  .hero-emoji {
+    font-size: 4rem;
+  }
+
+  .question-title {
+    font-size: 1.25rem;
+  }
+
+  .btn {
+    font-size: 1.05rem;
+    padding: 14px 24px;
+  }
+
+  .btn-option {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .option-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
+
+  .option-text {
+    font-size: 0.95rem;
+  }
+
+  .result-type {
+    font-size: 2.4rem;
+  }
+
+  .result-nickname {
+    font-size: 1.15rem;
+  }
+}
